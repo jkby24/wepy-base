@@ -1,74 +1,120 @@
-<style lang="less">
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-</style>
-
+<style lang="scss" src="./styles/weui.scss"></style>
+<style lang="scss" src="./styles/icons.scss"></style>
+<style lang="scss" src="./styles/base.scss"></style>
 <script>
-import wepy from 'wepy'
-import 'wepy-async-function'
-
-import { setStore } from 'wepy-redux'
-import configStore from './store'
-
-const store = configStore()
-setStore(store)
-
-export default class extends wepy.app {
-  config = {
-    pages: [
-      'pages/index'
-    ],
-    window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
-    }
-  }
-
-  globalData = {
-    userInfo: null
-  }
-
-  constructor () {
-    super()
-    this.use('requestfix')
-  }
-
-  onLaunch() {
-    this.testAsync()
-  }
-
-  sleep (s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
-    })
-  }
-
-  async testAsync () {
-    const data = await this.sleep(3)
-    console.log(data)
-  }
-
-  getUserInfo(cb) {
-    const that = this
-    if (this.globalData.userInfo) {
-      return this.globalData.userInfo
-    }
-    wepy.getUserInfo({
-      success (res) {
-        that.globalData.userInfo = res.userInfo
-        cb && cb(res.userInfo)
+  import wepy from 'wepy';
+  import WxUtils from './utils/WxUtils';
+  import 'wepy-async-function';
+  import { setStore } from 'wepy-redux'
+  import configStore from './store'
+  const store = configStore();
+  setStore(store);
+  export default class extends wepy.app {
+    globalData = {
+      auth: {},
+      scene: null,
+      'appCode': 'owVHb1gHrvktni80kjMlFMzSDJDWY0xR',
+      'baseUrl': 'https://www.easy-mock.com/mock/5ab7c9627a7afd3099d16b4c/customer',
+      version: 'v3.2.3',
+      'componentsParams': {},
+      'pageParams': {
       }
-    })
+    };
+    constructor () {
+      super();
+      // 注册中间件
+      this.use('requestfix');
+      this.use('promisify');
+      this.intercept('request', {
+        config (p) {
+          p.header = this.createAuthHeader();
+          return p;
+        }
+      });
+      this.intercept('uploadFile', {
+        config (p) {
+          p.header = this.createAuthHeader();
+          return p;
+        },
+        success (p) {
+          return p.data;
+        }
+      });
+    }
+    /**
+     * 构造权限头部
+     */
+    createAuthHeader () {
+      const loginCode = wepy.$instance.globalData.auth.login_code;
+      const header = {};
+      if (loginCode) {
+        header['login_code'] = loginCode;
+      }
+      return header;
+    }
+    onLaunch(param) {
+      // 校验SDK
+      WxUtils.checkSDK();
+      // 同步开放平台EXT数据
+      const ext = wepy.getExtConfigSync();
+      console.info('[ext] init ext data', ext);
+      if (ext.globalConfig) {
+        console.info('[ext] init ext global config data', ext.globalConfig);
+        Object.assign(ext, ext.globalConfig);
+      }
+      Object.assign(wepy.$instance.globalData, ext);
+      // 同步权限数据
+      this.syncStoreConfig('login_code');
+      this.syncStoreConfig('third_session');
+      this.syncStoreConfig('user');
+      // 获取保存场景值
+      if (param && param.scene) {
+        console.info('[scene]onLaunch scene', param.scene);
+        wepy.$instance.globalData.scene = param.scene;
+        console.info('[auth]onLaunch end');
+      }
+    }
+    syncStoreConfig(key) {
+      try {
+        const value = wepy.getStorageSync(key);
+        if (value !== '') {
+          console.info(`[auth]${key} sync success `);
+          wepy.$instance.globalData.auth[key] = value;
+        }
+      } catch (e) {
+        console.warn(`[auth]${key} sync fail `);
+      }
+    }
+    config = {
+      pages: [
+        'pages/home/template',
+        'pages/customer/index_template',
+      ],
+      'window': {
+        'backgroundTextStyle': 'dark',
+        'backgroundColor': '#F5F5F5',
+        'navigationBarBackgroundColor': '#F3514F'
+      },
+      'tabBar': {
+        'color': '#666666',
+        'selectedColor': '#F3514F',
+        'borderStyle': 'white',
+        'backgroundColor': '#FAFAFA',
+        'list': [
+          {
+            'iconPath': 'images/tab/home.png',
+            'selectedIconPath': 'images/tab/red/home-active.png',
+            'pagePath': 'pages/home/template',
+            'text': '首页'
+          },
+          {
+            'iconPath': 'images/tab/user.png',
+            'selectedIconPath': 'images/tab/red/user-active.png',
+            'pagePath': 'pages/customer/index_template',
+            'text': '我的'
+          }
+        ]
+      }
+    };
   }
-}
 </script>
