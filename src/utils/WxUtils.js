@@ -1,4 +1,4 @@
-import Tips from './Tips';
+// import Tips from './Tips';
 import wepy from 'wepy';
 
 export default class WxUtils {
@@ -110,7 +110,7 @@ export default class WxUtils {
    */
   static checkSDK() {
     if (this.isSDKExipred()) {
-      Tips.modal('您的微信版本太低，为确保正常使用，请尽快升级');
+      // Tips.modal('您的微信版本太低，为确保正常使用，请尽快升级');
     }
   }
 }

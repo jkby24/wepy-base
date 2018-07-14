@@ -1,6 +1,6 @@
 import base from './base'
 import wepy from 'wepy';
-import store from '../store/utils';
+// import store from '../store/utils';
 import WxUtils from '../utils/WxUtils';
 
 /**
@@ -32,7 +32,7 @@ export default class auth extends base {
     try {
       // 检查
       if (this.hasConfig('user')) {
-        store.save('user', this.getConfig('user'));
+        // store.save('user', this.getConfig('user'));
         return true;
       }
       console.info('[auth] user check fail');
@@ -46,7 +46,7 @@ export default class auth extends base {
       const {user} = await this.decodeUserInfo(rawUser);
       // 保存登录信息
       await this.setConfig('user', user);
-      store.save('user', user);
+      // store.save('user', user);
       return true;
     } catch (error) {
       console.error('[auth] 授权失败', error);

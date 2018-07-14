@@ -1,59 +1,52 @@
-const path = require('path');
-var prod = process.env.NODE_ENV === 'production';
-
+const prod = process.env.NODE_ENV === 'production';
 module.exports = {
   wpyExt: '.wpy',
-  eslint: true,
-  cliLogs: !prod,
+  cliLogs: true,
   build: {
     web: {
-      htmlTemplate: path.join('src', 'index.template.html'),
-      htmlOutput: path.join('web', 'index.html'),
-      jsOutput: path.join('web', 'index.js')
     }
   },
-  resolve: {
-    alias: {
-      counter: path.join(__dirname, 'src/components/counter'),
-      '@': path.join(__dirname, 'src')
-    },
-    aliasFields: ['wepy', 'weapp'],
-    modules: ['node_modules']
-  },
+  eslint: true,
   compilers: {
-    less: {
-      compress: prod
+    sass: {
+      outputStyle: 'compact'
     },
-    /*sass: {
-      outputStyle: 'compressed'
-    },*/
     babel: {
-      sourceMap: true,
+      sourceMap: false,
       presets: [
-        'env'
+        'es2015',
+        'stage-1'
       ],
       plugins: [
-        'transform-class-properties',
-        'transform-decorators-legacy',
-        'transform-object-rest-spread',
         'transform-export-extensions',
+        'syntax-export-extensions',
+        'transform-decorators-legacy'
       ]
     }
   },
   plugins: {
-  },
-  appConfig: {
-    noPromiseAPI: ['createSelectorQuery']
+    'autoprefixer': {
+      filter: /\.(wxss|css)$/,
+      config: {
+        browsers: ['last 11 iOS versions']
+      }
+    }
   }
-}
+};
 
 if (prod) {
-
+  delete module.exports.compilers.babel.sourcesMap;
   // 压缩sass
-  // module.exports.compilers['sass'] = {outputStyle: 'compressed'}
+  module.exports.compilers['sass'] = {outputStyle: 'compressed'};
 
   // 压缩js
   module.exports.plugins = {
+    autoprefixer: {
+      filter: /\.(wxss|css)$/,
+      config: {
+        browsers: ['last 11 iOS versions']
+      }
+    },
     uglifyjs: {
       filter: /\.js$/,
       config: {
@@ -69,6 +62,9 @@ if (prod) {
           quality: 80
         }
       }
+    },
+    filemin: {
+      filter: /\.(wxml)$/
     }
   }
 }

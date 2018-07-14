@@ -3,11 +3,11 @@
 </template>
 
 <script>
-  import store from '../../store/utils';
+  // import store from '../../store/utils';
   import { connect } from 'wepy-redux';
   import auth from '../../api/auth';
   import wepy from 'wepy';
-  import base from '../../mixins/base';
+  // import base from '../../mixins/base';
 
   @connect({
   })
@@ -69,11 +69,11 @@
     methods = {
     };
     components = {
-      Loading: Loading,
+      // Loading: Loading,
     };
     computed = {
     };
-    mixins = [base];
+    // mixins = [base];
     config = {
       navigationBarTitleText: '首页'
     };
