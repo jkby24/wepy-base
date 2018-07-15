@@ -5,7 +5,7 @@ export default class WxUtils {
   static tabUrls = ['/pages/home/template', '/pages/goods/category', '/pages/goods/cart', '/pages/customer/index', '/pages/customer/index_template'];
   static mapUrls = {
     '/pages/shop/index': '/pages/home/template',
-    '/pages/home/home': '/pages/home/template'
+    '/pages/home/home': '/pages/home/home'
   };
 
   static isTab (url) {

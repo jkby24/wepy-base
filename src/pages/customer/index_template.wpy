@@ -1,8 +1,6 @@
 <template>
   <view class="container">
-    <view class="btn-panel">
-        <button open-type="getUserInfo" class="weui-btn" type="primary" bindgetuserinfo="confirm" >确认授权</button>
-    </view>
+    3
 
   </view>
 </template>
@@ -12,7 +10,7 @@
   // import store from '../../store/utils';
   import { connect } from 'wepy-redux';
   import wepy from 'wepy';
-  import Tips from '../../utils/Tips';
+  // import Tips from '../../utils/Tips';
   // import base from '../../mixins/base';
 
   @connect({
@@ -26,26 +24,15 @@
       triggers: []
     };
     async onLoad () {
+      // wx.switchTab({
+      //     url: '/pages/home/home'
+      //   });
       const result = await auth.user({block: true, redirect: true});
       if (!result) return;
       // await store.init();
     };
     methods = {
-      async confirm({detail}) {
-        if (detail.rawData) {
-          
-          const result = await auth.user({block: false, redirect: false}, detail);
-          if (!result) return;
-          Tips.success('授权成功');
-          if (this.redirect == 'true') {
-            // WxUtils.backOrRedirect('/pages/customer/index');
-          } else {
-            wepy.navigateBack();
-          }
-        } else {
-          Tips.error('授权失败');
-        }
-      }
+      
     };
     components = {
     };

@@ -11,16 +11,16 @@ export default class auth extends base {
    * 一键登录
    */
   static async login() {
-    const loginCode = this.getConfig('login_code');
-    if (loginCode != null && loginCode != '') {
+    const appSession = this.getConfig('app_session');
+    if (appSession != null && appSession != '') {
       try {
-        await this.checkLoginCode(loginCode);
+        await this.checkSession(appSession);
       } catch (e) {
-        console.warn('check login code fial', loginCode);
+        console.warn('check login code fail', appSession);
         await this.doLogin();
       }
     } else {
-      console.warn('login code not exists', loginCode);
+      console.warn('login code not exists', appSession);
       await this.doLogin();
     }
   }
@@ -40,10 +40,12 @@ export default class auth extends base {
       await this.doLogin();
       // 获取用户信息
       const rawUser = userInfo != null ? userInfo : await wepy.getUserInfo();
+      console.log(rawUser)
       // 检查是否通过
       // await this.checkUserInfo(rawUser);
       // 解密信息
-      const {user} = await this.decodeUserInfo(rawUser);
+      // const {user} = await this.decodeUserInfo(rawUser);
+      const user = {}
       // 保存登录信息
       await this.setConfig('user', user);
       // store.save('user', user);
@@ -62,67 +64,66 @@ export default class auth extends base {
     }
   }
 
-  /**
-   * 服务端检查数据完整性
-   */
-  static async checkUserInfo(rawUser) {
-    const url = `${this.baseUrl}/auth/check_userinfo`;
-    const param = {
-      rawData: rawUser.rawData,
-      signature: rawUser.signature,
-      thirdSession: this.getConfig('third_session'),
-      app_code: this.getShopCode()
-    };
-    return await this.get(url, param);
-  }
+  // /**
+  //  * 服务端检查数据完整性
+  //  */
+  // static async checkUserInfo(rawUser) {
+  //   const url = `${this.baseUrl}/auth/check_userinfo`;
+  //   const param = {
+  //     rawData: rawUser.rawData,
+  //     signature: rawUser.signature,
+  //     thirdSession: this.getConfig('third_session'),
+  //     app_code: this.getAppCode()
+  //   };
+  //   return await this.get(url, param);
+  // }
 
-  /**
-   * 服务端解密用户信息
-   */
-  static async decodeUserInfo(rawUser) {
-    const url = `${this.baseUrl}/auth/decode_userinfo`;
-    const param = {
-      encryptedData: rawUser.encryptedData,
-      iv: rawUser.iv,
-      thirdSession: this.getConfig('third_session'),
-      app_code: this.getShopCode()
-    };
-    return await this.get(url, param);
-  }
+  // /**
+  //  * 服务端解密用户信息
+  //  */
+  // static async decodeUserInfo(rawUser) {
+  //   const url = `${this.baseUrl}/auth/decode_userinfo`;
+  //   const param = {
+  //     encryptedData: rawUser.encryptedData,
+  //     iv: rawUser.iv,
+  //     thirdSession: this.getConfig('third_session'),
+  //     app_code: this.getAppCode()
+  //   };
+  //   return await this.get(url, param);
+  // }
 
   /**
    * 执行登录操作
    */
   static async doLogin() {
     const {code} = await wepy.login();
-    const {third_session, login_code} = await this.session(code);
-    await this.setConfig('login_code', login_code);
-    await this.setConfig('third_session', third_session);
-    await this.login();
+    console.log(code)
+    // const {app_session} = await this.session(code);
+    // await this.setConfig('app_session', app_session);
+    // await this.login();
   }
 
   /**
    * 获取会话
    */
   static async session(jsCode) {
-    const shopCode = wepy.$instance.globalData.appCode;
-    const url = `${this.baseUrl}/auth/session?code=${jsCode}&app_code=${shopCode}`;
+    const url = `${this.baseUrl}/auth/session?code=${jsCode}`;
     return await this.get(url);
   }
 
   /**
    * 检查登录情况
    */
-  static async checkLoginCode(loginCode) {
-    const url = `${this.baseUrl}/auth/check_session?login_code=${loginCode}`;
+  static async checkSession(appSession) {
+    const url = `${this.baseUrl}/auth/check_session?app_session=${appSession}`;
     const data = await this.get(url);
     return data.result;
   }
 
   /**
-   * 获取店铺标识符
+   * 获取应用标识符
    */
-  static getShopCode() {
+  static getAppCode() {
     return wepy.$instance.globalData.appCode;
   }
 

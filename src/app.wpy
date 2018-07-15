@@ -87,7 +87,8 @@
     }
     config = {
       pages: [
-        'pages/home/template',
+        'pages/home/home',
+        'pages/home/login',
         'pages/customer/index_template',
       ],
       'window': {
@@ -104,7 +105,7 @@
           {
             'iconPath': 'images/tab/home.png',
             'selectedIconPath': 'images/tab/red/home-active.png',
-            'pagePath': 'pages/home/template',
+            'pagePath': 'pages/home/home',
             'text': '首页'
           },
           {

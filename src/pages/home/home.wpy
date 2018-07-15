@@ -7,13 +7,14 @@
   import { connect } from 'wepy-redux';
   import auth from '../../api/auth';
   import wepy from 'wepy';
+  import base from '../../mixins/base';
   // import base from '../../mixins/base';
 
   @connect({
   })
-  export default class IndexTemplate extends wepy.page {
+  export default class Home extends wepy.page {
     data = {
-      // pageId: null,
+      pageId: null,
       // init: false,
     };
     async onLoad ({pageId, sence}) {
@@ -21,13 +22,13 @@
       await auth.login();
       // await store.init();
       // this.sence = sence;
-      // if (pageId) {
-      //   console.info(`[template] load template page id=${pageId}`);
-      //   this.pageId = pageId;
-      // } else if (this.homePageId) {
-      //   console.info(`[template] load home page`);
-      //   this.pageId = this.homePageId;
-      // }
+      if (pageId) {
+        console.info(`[template] load template page id=${pageId}`);
+        this.pageId = pageId;
+      } else if (this.homePageId) {
+        console.info(`[template] load home page`);
+        this.pageId = this.homePageId;
+      }
       // const page = await await config.layout(this.pageId);
       // this.renderTemplatePage(page);
       // console.info(`[template] render template page success`);
@@ -73,7 +74,7 @@
     };
     computed = {
     };
-    // mixins = [base];
+    mixins = [base];
     config = {
       navigationBarTitleText: '首页'
     };
