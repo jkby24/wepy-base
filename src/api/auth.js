@@ -37,7 +37,8 @@ export default class auth extends base {
       }
       console.info('[auth] user check fail');
       // 重新登录
-      await this.doLogin();
+      await this.login();
+     
       // 获取用户信息
       const rawUser = userInfo != null ? userInfo : await wepy.getUserInfo();
       console.log(rawUser)
@@ -53,7 +54,7 @@ export default class auth extends base {
     } catch (error) {
       console.error('[auth] 授权失败', error);
       if (param.block) {
-        const url = `/pages/home/login?redirect=${param.redirect}`;
+        const url = `${WxUtils.pages.login}?redirect=${param.redirect}`;
         if (param.redirect) {
           WxUtils.backOrRedirect(url);
         } else {
@@ -97,17 +98,16 @@ export default class auth extends base {
    */
   static async doLogin() {
     const {code} = await wepy.login();
-    console.log(code)
-    // const {app_session} = await this.session(code);
-    // await this.setConfig('app_session', app_session);
-    // await this.login();
+    const {app_session} = await this.session(code);
+    await this.setConfig('app_session', app_session);
+    await this.login();
   }
 
   /**
    * 获取会话
    */
   static async session(jsCode) {
-    const url = `${this.baseUrl}/auth/session?code=${jsCode}`;
+    const url = `${this.baseUrl}/auth/login?code=${jsCode}`;
     return await this.get(url);
   }
 
@@ -115,9 +115,10 @@ export default class auth extends base {
    * 检查登录情况
    */
   static async checkSession(appSession) {
-    const url = `${this.baseUrl}/auth/check_session?app_session=${appSession}`;
-    const data = await this.get(url);
-    return data.result;
+    // const url = `${this.baseUrl}/auth/check_session?app_session=${appSession}`;
+    // const data = await this.get(url);
+    // return data.result;
+    return true;
   }
 
   /**

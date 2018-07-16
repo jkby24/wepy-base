@@ -11,12 +11,12 @@
   import { connect } from 'wepy-redux';
   import wepy from 'wepy';
   // import Tips from '../../utils/Tips';
-  // import base from '../../mixins/base';
+  import base from '../../mixins/base';
 
   @connect({
     reInfo: null
   })
-  export default class IndexTemplate extends wepy.page {
+  export default class UserIndex extends wepy.page {
     data = {
       init: false,
       components: null,
@@ -24,9 +24,6 @@
       triggers: []
     };
     async onLoad () {
-      // wx.switchTab({
-      //     url: '/pages/home/home'
-      //   });
       const result = await auth.user({block: true, redirect: true});
       if (!result) return;
       // await store.init();
@@ -38,7 +35,7 @@
     };
     computed = {
     };
-    // mixins = [base];
+    mixins = [base];
     config = {
       navigationBarTitleText: '个人中心',
       enablePullDownRefresh: true

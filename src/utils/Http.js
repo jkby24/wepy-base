@@ -30,7 +30,7 @@ export default class http {
       return false;
     }
     const wxData = res.data;
-    return !(wxData && wxData.code !== 0);
+    return !(wxData && wxData.result_code !== 0);
   }
 
   /**
@@ -42,7 +42,7 @@ export default class http {
     const wxData = res.data;
     const serverData = wxData.data;
     if (serverData) {
-      error.serverCode = wxData.code;
+      error.serverCode = wxData.result_code;
       error.message = serverData.message;
       error.serverData = serverData;
     }

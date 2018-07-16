@@ -2,19 +2,22 @@
 import wepy from 'wepy';
 
 export default class WxUtils {
-  static tabUrls = ['/pages/home/template', '/pages/goods/category', '/pages/goods/cart', '/pages/customer/index', '/pages/customer/index_template'];
+  static pages = {
+    user_index:'/pages/user/index',
+    home:'/pages/home/home',
+    login:'/pages/home/login',
+  };
+  static tabUrls = [
+    '/pages/home/home',
+    '/pages/user/index'];
   static mapUrls = {
-    '/pages/shop/index': '/pages/home/template',
-    '/pages/home/home': '/pages/home/home'
   };
 
   static isTab (url) {
-    const type = wepy.$instance.globalData.shopType;
-    return type == 1 && this.tabUrls.some(path => path == url);
+    return this.tabUrls.some(path => path == url);
   }
   static mapUrl (url) {
-    const type = wepy.$instance.globalData.shopType;
-    if (type == 1 && this.mapUrls[url]) {
+    if (this.mapUrls[url]) {
       return this.mapUrls[url];
     } else {
       return url;

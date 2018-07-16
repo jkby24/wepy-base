@@ -19,7 +19,7 @@
     };
     async onLoad ({pageId, sence}) {
       // 登录检查
-      await auth.login();
+      // await auth.login();
       // await store.init();
       // this.sence = sence;
       if (pageId) {

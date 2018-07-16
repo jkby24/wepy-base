@@ -14,9 +14,13 @@
       auth: {},
       scene: null,
       'appCode': 'owVHb1gHrvktni80kjMlFMzSDJDWY0xR',
-      'baseUrl': 'https://www.easy-mock.com/mock/5ab7c9627a7afd3099d16b4c/customer',
+      // 'baseUrl': 'https://www.easy-mock.com/mock/5ab7c9627a7afd3099d16b4c/customer',
+      'baseUrl': 'https://wf7401.uf-tobacco.com/xljk',
       version: 'v3.2.3',
       'componentsParams': {},
+      'pages': {
+        'HOME_PAGE': 'pages/home/home'
+      },
       'pageParams': {
       }
     };
@@ -89,7 +93,7 @@
       pages: [
         'pages/home/home',
         'pages/home/login',
-        'pages/customer/index_template',
+        'pages/user/index'
       ],
       'window': {
         'backgroundTextStyle': 'dark',
@@ -111,7 +115,7 @@
           {
             'iconPath': 'images/tab/user.png',
             'selectedIconPath': 'images/tab/red/user-active.png',
-            'pagePath': 'pages/customer/index_template',
+            'pagePath': 'pages/user/index',
             'text': '我的'
           }
         ]
