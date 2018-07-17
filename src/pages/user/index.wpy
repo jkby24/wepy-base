@@ -1,37 +1,59 @@
 <template>
-  <view class="container">
-    3
+  <view class="template-box column" wx:if="{{init}}">
 
+    <!--组件-->
+    <repeat for="{{components}}" key="index" index="index" item="item">
+
+      <!--简单头像-->
+      <!-- <block wx:if="{{item.type == 'CUSTOMER_AVATAR'}}">
+        <CustomerAvatar />
+      </block> -->
+
+      <!--会员卡-->
+      <block wx:if="{{item.type == 'VIP_CARD'}}">
+        <VipCard />
+      </block>
+
+    </repeat>
+
+    <!--插件-->
+    <repeat for="{{plugins}}" key="index" index="index" item="item">
+    </repeat>
   </view>
 </template>
 
 <script>
   import auth from '../../api/auth';
-  // import store from '../../store/utils';
+  import store from '../../store/utils';
   import { connect } from 'wepy-redux';
   import wepy from 'wepy';
   // import Tips from '../../utils/Tips';
   import base from '../../mixins/base';
+
+  import VipCard from '../../components/customer/vip_card';
 
   @connect({
     reInfo: null
   })
   export default class UserIndex extends wepy.page {
     data = {
-      init: false,
-      components: null,
+      init: true,
+      components: [{
+        type: 'VIP_CARD'
+      }],
       plugins: null,
       triggers: []
     };
     async onLoad () {
       const result = await auth.user({block: true, redirect: true});
       if (!result) return;
-      // await store.init();
+      await store.init();
     };
     methods = {
       
     };
     components = {
+      VipCard: VipCard,
     };
     computed = {
     };

@@ -13,15 +13,16 @@
     globalData = {
       auth: {},
       scene: null,
-      'appCode': 'owVHb1gHrvktni80kjMlFMzSDJDWY0xR',
+      skey: 'jfdjflakjfduoifuwernnfjdhferexjkjcdiufowerwjfkdsjfk23424234kj23243j',
+      appCode: 'owVHb1gHrvktni80kjMlFMzSDJDWY0xR',
       // 'baseUrl': 'https://www.easy-mock.com/mock/5ab7c9627a7afd3099d16b4c/customer',
       'baseUrl': 'https://wf7401.uf-tobacco.com/xljk',
       version: 'v3.2.3',
-      'componentsParams': {},
-      'pages': {
+      componentsParams: {},
+      pages: {
         'HOME_PAGE': 'pages/home/home'
       },
-      'pageParams': {
+      pageParams: {
       }
     };
     constructor () {
@@ -50,9 +51,13 @@
      */
     createAuthHeader () {
       const loginCode = wepy.$instance.globalData.auth.login_code;
+      const skey = wepy.$instance.globalData.skey;
       const header = {};
       if (loginCode) {
-        header['login_code'] = loginCode;
+        // header['login_code'] = loginCode;
+      }
+      if (skey) {
+        header['skey'] = skey;
       }
       return header;
     }
