@@ -51,7 +51,7 @@
   import base from '../../mixins/base'
 
   @connect({
-    // member: store.get('member'),
+    member: store.get('member'),
     // card: store.get('card'),
     user: store.get('user')
   })
@@ -75,7 +75,6 @@
     };
     computed = {
       avatarUrl () {
-        debugger;
         if (this.user == null || this.user.avatarUrl == null) {
           return 'http://img.leshare.shop/shop/other/customer_white.png';
         } else {

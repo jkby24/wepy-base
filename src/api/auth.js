@@ -46,9 +46,9 @@ export default class auth extends base {
       // await this.checkUserInfo(rawUser);
       // 解密信息
       // const {user} = await this.decodeUserInfo(rawUser);
-      const user = {}
+      const user = rawUser.userInfo
       // 保存登录信息
-      await this.setConfig('user', rawUser);
+      await this.setConfig('user', user);
       store.save('user', user);
       return true;
     } catch (error) {
