@@ -98,7 +98,8 @@
       pages: [
         'pages/home/home',
         'pages/home/login',
-        'pages/user/index'
+        'pages/user/index',
+        'pages/user/registe_member'
       ],
       'window': {
         'backgroundTextStyle': 'dark',

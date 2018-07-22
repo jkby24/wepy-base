@@ -35,7 +35,8 @@ export default class Validate {
    * 验证手机格式
    */
   static tel(value) {
-    return this.optional(value) || /^1[34578]\d{9}$/.test(value)
+    let reg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
+    return this.optional(value) || reg.test(value)
   }
   /**
    * 验证URL格式

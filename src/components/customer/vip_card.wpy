@@ -63,7 +63,7 @@
     };
     methods = {
       regist () {
-        this.$root.$navigate('/pages/customer/registe_member');
+        this.$root.$navigate('/pages/user/registe_member');
       },
       detail() {
         if (this.isDetail == 'false') return;

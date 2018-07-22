@@ -11,7 +11,9 @@ const CACHE_TIMEOUT = 5 * 60 * 1000;
 // 嵌套字段，需要拆解缓存
 const NESTED_KEY = ['config', 'member', 'coupon'];
 // 初始化需要加载的字段
-const INIT_KEY = ['config', 'coupon'];
+// const INIT_KEY = ['config', 'coupon'];
+// 初始化需要加载的字段
+const INIT_KEY = [];
 // 加载状态
 let isLoading = false;
 // 等待队列

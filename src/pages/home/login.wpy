@@ -21,9 +21,9 @@
 <script>
   import wepy from 'wepy';
   import { connect } from 'wepy-redux';
-  // import store from '../../store/utils';
+  import store from '../../store/utils';
   import auth from '../../api/auth';
-  // import base from '../../mixins/base';
+  import base from '../../mixins/base';
   import Tips from '../../utils/Tips';
   import WxUtils from '../../utils/WxUtils';
 
@@ -38,10 +38,10 @@
       reAuth: null
     };
     async onLoad ({redirect}) {
-      // await store.init();
+      await store.init();
       this.redirect = redirect;
       this.reInfo = WxUtils.canIUse('button.open-type.getUserInfo');
-      // this.loaded();
+      this.loaded();
     };
     methods = {
       async confirm({detail}) {
