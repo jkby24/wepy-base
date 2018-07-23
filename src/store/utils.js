@@ -1,11 +1,11 @@
 import { getStore } from 'wepy-redux';
 import { SAVE } from './types/cache';
-
+import member from '../api/member';
 const store = getStore();
 // 元数据
 const meta = {};
 // 是否调试
-const IS_DEBUG = false;
+const IS_DEBUG = true;
 // 超时时间
 const CACHE_TIMEOUT = 5 * 60 * 1000;
 // 嵌套字段，需要拆解缓存
@@ -13,7 +13,7 @@ const NESTED_KEY = ['config', 'member', 'coupon'];
 // 初始化需要加载的字段
 // const INIT_KEY = ['config', 'coupon'];
 // 初始化需要加载的字段
-const INIT_KEY = [];
+const INIT_KEY = ['member'];
 // 加载状态
 let isLoading = false;
 // 等待队列
@@ -123,26 +123,26 @@ const fetch = (field) => {
   // 先更新元数据
   updateMeta(field);
   // // 再获取Promise对象
-  // switch (field) {
-  //   case 'config':
-  //     return config.init();
-  //   case 'member' :
-  //     return member.info();
-  //   case 'notices':
-  //     return shop.notices();
-  //   case 'status' :
-  //     return shop.getStatus();
-  //   case 'categories' :
-  //     return goods.categories();
-  //   case 'coupon' :
-  //     return coupon.all();
-  //   case 'reduce' :
-  //     return shop.reduces();
-  //   case 'recommend' :
-  //     return goods.recommend().next();
-  //   case 'version' :
-  //     return shop.chargeLimit();
-  // }
+  switch (field) {
+    // case 'config':
+    //   return config.init();
+    case 'member' :
+      return member.info();
+    // case 'notices':
+    //   return shop.notices();
+    // case 'status' :
+    //   return shop.getStatus();
+    // case 'categories' :
+    //   return goods.categories();
+    // case 'coupon' :
+    //   return coupon.all();
+    // case 'reduce' :
+    //   return shop.reduces();
+    // case 'recommend' :
+    //   return goods.recommend().next();
+    // case 'version' :
+    //   return shop.chargeLimit();
+  }
 };
 
 /**

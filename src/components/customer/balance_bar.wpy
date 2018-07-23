@@ -1,0 +1,57 @@
+<template>
+  <!--余额、充值-->
+  <view class="row blance-bar-box" wx:if="{{member != null}}">
+    <view class="column-center">
+      <text class="major xxl">{{balance}}</text>
+      <text>我的余额</text>
+    </view>
+    <view class="column-center" @tap="pay">
+      <icon class="recharge normal" color="major"/>
+      <text>充值</text>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import { connect } from 'wepy-redux';
+  import store from '../../store/utils';
+  import base from '../../mixins/base'
+  @connect({
+    member: store.get('member'),
+    card: store.get('card')
+  })
+  export default class BalanceBar extends wepy.component {
+    props = {
+    };
+    data = {};
+    methods = {
+      pay() {
+        this.$root.$navigate('/pages/customer/balance');
+      }
+    };
+    computed = {
+      balance () {
+        let balance = 0.00;
+        if (this.member&&this.card) {
+          balance = this.card.balance;
+        }
+        return `￥${balance}`
+      }
+    }
+    mixins = [base]
+  }
+</script>
+
+<style lang="scss">
+  @import "../../styles/variable";
+  .blance-bar-box{
+    margin-bottom: 10rpx;
+    view{
+      flex: 1;
+    }
+    view + view{
+      border-left: $border;
+    }
+  }
+</style>

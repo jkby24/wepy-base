@@ -52,7 +52,8 @@
 
   @connect({
     member: store.get('member'),
-    // card: store.get('card'),
+    card: store.get('card'),
+    discount: store.get('discount'),
     user: store.get('user')
   })
   export default class VipCard extends wepy.component {
@@ -89,6 +90,7 @@
         }
       },
       levelName () {
+        this.discount
         if (this.member && this.card && this.card.supplyDiscount == 1 && this.member.discountRule) {
           return this.member.discountRule.levelName;
         } else {

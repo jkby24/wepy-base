@@ -13,7 +13,9 @@
       <block wx:if="{{item.type == 'VIP_CARD'}}">
         <VipCard />
       </block>
-
+      <block wx:if="{{item.type == 'BALANCE_BAR'}}">
+        <BalanceBar />
+      </block>
     </repeat>
 
     <!--插件-->
@@ -31,7 +33,7 @@
   import base from '../../mixins/base';
 
   import VipCard from '../../components/customer/vip_card';
-
+  import BalanceBar from '../../components/customer/balance_bar';
   @connect({
     reInfo: null
   })
@@ -40,6 +42,8 @@
       init: true,
       components: [{
         type: 'VIP_CARD'
+      },{
+        type: 'BALANCE_BAR'
       }],
       plugins: null,
       triggers: []
@@ -54,6 +58,7 @@
     };
     components = {
       VipCard: VipCard,
+      BalanceBar: BalanceBar,
     };
     computed = {
     };

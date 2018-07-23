@@ -111,10 +111,10 @@
         this.registeInfo = this.input;
         try {
           Tips.loading();
-          await member.regist(this.registeInfo, detail.value.code);
+          // await member.regist(this.registeInfo, detail.value.code);
           await Tips.success('注册成功');
           await store.refresh('member');
-          WxUtils.backOrRedirect('/pages/customer/index_template');
+          WxUtils.backOrRedirect('/pages/user/index');
         } catch (error) {
           this.tips(error.message);
           Tips.loaded();

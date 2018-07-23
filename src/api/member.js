@@ -38,15 +38,23 @@ export default class member extends base {
    * 获取会员卡信息
    */
   static _card() {
-    const url = `${this.baseUrl}/memberCards`;
-    return this.get(url);
+    // const url = `${this.baseUrl}/memberCards`;
+    // return this.get(url);
+    return Promise.resolve({
+      balance: 10.21
+    })
   }
   /**
    * 获取会员信息
    */
   static _member() {
-    const url = `${this.baseUrl}/members`;
-    return this.get(url);
+    // const url = `${this.baseUrl}/members`;
+    // return this.get(url);
+    return Promise.resolve({
+      memberId: 22,
+      memberNumber: '3679997350337',
+      totalCost: 775.21
+    })
   }
   /**
    * 处理折扣率
