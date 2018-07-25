@@ -16,6 +16,14 @@
       <block wx:if="{{item.type == 'BALANCE_BAR'}}">
         <BalanceBar />
       </block>
+      <!--导航网格-->
+      <block wx:if="{{item.type == 'NAV_GRID'}}">
+        <NavGrid :param.sync="item" />
+      </block>
+      <!--分隔符-->
+      <block wx:if="{{item.type == 'SEPARATOR'}}">
+        <Separator :param.sync="item" />
+      </block>
     </repeat>
 
     <!--插件-->
@@ -25,54 +33,98 @@
 </template>
 
 <script>
-  import auth from '../../api/auth';
-  import store from '../../store/utils';
-  import { connect } from 'wepy-redux';
-  import wepy from 'wepy';
-  // import Tips from '../../utils/Tips';
-  import base from '../../mixins/base';
+import auth from '../../api/auth';
+import store from '../../store/utils';
+import { connect } from 'wepy-redux';
+import wepy from 'wepy';
+// import Tips from '../../utils/Tips';
+import base from '../../mixins/base';
 
-  import VipCard from '../../components/customer/vip_card';
-  import BalanceBar from '../../components/customer/balance_bar';
-  @connect({
-    reInfo: null
-  })
-  export default class UserIndex extends wepy.page {
-    data = {
-      init: true,
-      components: [{
+import VipCard from '../../components/customer/vip_card';
+import BalanceBar from '../../components/customer/balance_bar';
+import NavGrid from '../../components/customer/nav_grid';
+import Separator from '../../components/template/separator';
+@connect({
+  reInfo: null
+})
+export default class UserIndex extends wepy.page {
+  data = {
+    init: true,
+    components: [
+      {
         type: 'VIP_CARD'
-      },{
+      },
+      {
         type: 'BALANCE_BAR'
-      }],
-      plugins: null,
-      triggers: []
-    };
-    async onLoad () {
-      const result = await auth.user({block: true, redirect: true});
-      if (!result) return;
-      await store.init();
-    };
-    methods = {
-      
-    };
-    components = {
-      VipCard: VipCard,
-      BalanceBar: BalanceBar,
-    };
-    computed = {
-    };
-    mixins = [base];
-    config = {
-      navigationBarTitleText: '个人中心',
-      enablePullDownRefresh: true
-    };
+      },
+      {
+        backgroundColor: '#F5F5F5',
+        borderBottom: false,
+        borderTop: true,
+        height: '10rpx',
+        title: '分隔符',
+        type: 'SEPARATOR'
+      },
+      {
+        type: 'NAV_GRID',
+        title: '我的工具',
+        data: [
+          [
+            {
+              action: 'FAVORITE',
+              iconClass: 'like',
+              iconColor: '#f85',
+              iconSize: '24px',
+              targetId: null,
+              title: '我的收藏'
+            },
+            {
+              action: 'FAVORITE',
+              iconClass: 'like',
+              iconColor: '#f85',
+              iconSize: '24px',
+              targetId: null,
+              title: '我的收藏'
+            },
+            {
+              action: 'FAVORITE',
+              iconClass: 'like',
+              iconColor: '#f85',
+              iconSize: '24px',
+              targetId: null,
+              title: '我的收藏'
+            }
+          ]
+        ]
+      }
+    ],
+    plugins: null,
+    triggers: []
+  };
+  async onLoad() {
+    const result = await auth.user({ block: true, redirect: true });
+    if (!result) return;
+    await store.init();
   }
+  methods = {};
+  components = {
+    VipCard,
+    BalanceBar,
+    NavGrid,
+    Separator
+  };
+  computed = {};
+  mixins = [base];
+  config = {
+    navigationBarTitleText: '个人中心',
+    enablePullDownRefresh: true
+  };
+}
 </script>
 
 <style lang="scss">
-  @import "../../styles/variable";
-  .template-box{
-    background-color: white;
-  }
+@import '../../styles/variable';
+.template-box {
+  background-color: white;
+}
 </style>
