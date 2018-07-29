@@ -65,38 +65,38 @@ export default class UserIndex extends wepy.page {
         title: '分隔符',
         type: 'SEPARATOR'
       },
-      {
-        type: 'NAV_GRID',
-        title: '我的工具',
-        data: [
-          [
-            {
-              action: 'FAVORITE',
-              iconClass: 'like',
-              iconColor: '#f85',
-              iconSize: '24px',
-              targetId: null,
-              title: '我的收藏'
-            },
-            {
-              action: 'FAVORITE',
-              iconClass: 'like',
-              iconColor: '#f85',
-              iconSize: '24px',
-              targetId: null,
-              title: '我的收藏'
-            },
-            {
-              action: 'FAVORITE',
-              iconClass: 'like',
-              iconColor: '#f85',
-              iconSize: '24px',
-              targetId: null,
-              title: '我的收藏'
-            }
-          ]
-        ]
-      }
+      // {
+      //   type: 'NAV_GRID',
+      //   title: '我的工具',
+      //   data: [
+      //     // [
+      //     //   {
+      //     //     action: 'FAVORITE',
+      //     //     iconClass: 'like',
+      //     //     iconColor: '#f85',
+      //     //     iconSize: '24px',
+      //     //     targetId: null,
+      //     //     title: '我的收藏'
+      //     //   },
+      //     //   {
+      //     //     action: 'FAVORITE',
+      //     //     iconClass: 'like',
+      //     //     iconColor: '#f85',
+      //     //     iconSize: '24px',
+      //     //     targetId: null,
+      //     //     title: '我的收藏'
+      //     //   },
+      //     //   {
+      //     //     action: 'FAVORITE',
+      //     //     iconClass: 'like',
+      //     //     iconColor: '#f85',
+      //     //     iconSize: '24px',
+      //     //     targetId: null,
+      //     //     title: '我的收藏'
+      //     //   }
+      //     // ]
+      //   ]
+      // }
     ],
     plugins: null,
     triggers: []

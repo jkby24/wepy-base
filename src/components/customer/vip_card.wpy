@@ -59,7 +59,7 @@
   export default class VipCard extends wepy.component {
     props = {
       isDetail: {
-        default: 'true'
+        default: 'false'
       }
     };
     methods = {

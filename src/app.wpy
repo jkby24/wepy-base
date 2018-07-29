@@ -99,7 +99,8 @@
         'pages/home/home',
         'pages/home/login',
         'pages/user/index',
-        'pages/user/registe_member'
+        'pages/user/registe_member',
+        'pages/goods/category'
       ],
       'window': {
         'backgroundTextStyle': 'dark',
@@ -117,6 +118,12 @@
             'selectedIconPath': 'images/tab/red/home-active.png',
             'pagePath': 'pages/home/home',
             'text': '首页'
+          },
+          {
+            'iconPath': 'images/tab/order.png',
+            'selectedIconPath': 'images/tab/red/order-active.png',
+            'pagePath': 'pages/goods/category',
+            'text': '分类'
           },
           {
             'iconPath': 'images/tab/user.png',
